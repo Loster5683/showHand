@@ -67,11 +67,6 @@ public class Card
 		{
 			return "Ghost";
 		}
-		return values[value] + "," + colors[color] ;
-//		if (isGhost)
-//		{
-//			return "0,0";
-//		}
-//		return value + "," + color ;
+		return values[value] + "," + colors[color] ;	
 	}
 }

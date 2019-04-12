@@ -1,46 +1,18 @@
-/**
- * 文件名：Type.java
- * 描述：  类型识别类文件
- * 创建人：yeqiang
- * 创建时间：2019/4/11
-*/
-
 package com.company;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-/**
- * @function  提供牌型判断与牌型大小比较的功能
- * @author    yeqiang
- * @version    1.1
- * @time      2019/4/11
-*/
-public class Type implements Comparable<Type>
+public class ParseType
 {
-	/**
-	 * color 记录用于牌组大小比较的颜色
-	 * type  记录牌组的类型
-	 * number 记录牌组用于比较大小的数字一大小
-	 * number2 记录牌组用于比较大小的数字二的大小
-	 * type 记录不同type对应牌型的名称，用于返回字符串
-	 * hashMap 记录牌组内卡牌统计数据
-	 */
-	private int color;
-	private int type;
-	private int number;
-	private int number2;
-	private String [] types = {"五鬼","五条","同花顺","四条","葫芦","同花","顺子","三条","二对","单对","散牌"};
-	private HashMap<Integer,ArrayList<Integer>> hashMap = new HashMap<Integer, ArrayList<Integer>>();
+	HashMap<Integer,ArrayList<Integer>> hashMap = new HashMap<Integer, ArrayList<Integer>>();
+	public CardType parseType(ArrayList<Card> card){
+		int color = 0;
+		int type = 0;
+		int number = 0;
+		int number2 = 0;
 
-	/**
-	 * @function  构造函数内对牌型进行判断
-	 * @param  card 传入的卡组参数
-	*/
-	public Type(ArrayList<Card> card)
-	{
-		//牌组大小不为5报错
 		if(card.size()!=5)
 		{
 			System.out.println("Wrong type");
@@ -94,19 +66,20 @@ public class Type implements Comparable<Type>
 			// 统计非鬼牌数值
 			values.add(cardValue);
 		}
+
 		//排序方便取值
 		Collections.sort(values);
 		int size = hashMap.size();
+
 		//只有一种值的牌 说明五张全为鬼牌
 		if(size == 1)
 		{
 			//五鬼牌型
-			type = 0;
+			return new WuGui(card);
 		}
 		//只有两种值的牌 因为鬼牌一定占用一个位置，即使鬼牌数为0，五张牌构成五条
 		else if(size == 2)
 		{
-			type = 1;
 			for (Integer i : hashMap.keySet()){
 				//找到不为鬼牌的牌的值
 				if(i != 0)
@@ -115,6 +88,7 @@ public class Type implements Comparable<Type>
 					break;
 				}
 			}
+			return new WuTiao(card,number);
 		}
 		//三种值的牌
 		else if (size == 3)
@@ -126,28 +100,35 @@ public class Type implements Comparable<Type>
 				if(colors.size() == 1)
 				{
 					//如果能够构成顺子则为同花顺,否则构成四条,同花顺之间比较需要颜色，所以需要记录花色
-					if( isConnected(values, ghostCount) )
+					if( isConnected(values, ghostCount,number) )
 					{
-						type = 2;
 						color = colors.get(0);
+						return new TongHuaShun(card,number,color);
 					}
 					else{
 						//四条需要记录四条的值，单张的值与四条花色,让三张鬼与大牌组成四条
-						type = 3;
 						// 如果最小值为
 						if(values.get(0) == 1)
 						{
 							color = this.getColor(1);
 							number = changeA(values.get(0));
-							number2 = values.get(1);
+							//number2 = values.get(1);
 						}
 						else {
 							number = values.get(1);
-							number2 = values.get(0);
+							//number2 = values.get(0);
 							color = this.getColor(number);
 						}
+						return new SiTiao(card,number,color);
 					}
 				}
+
+				/*****
+				 *
+				 * 4.12  20:03  
+				 *
+				 */
+
 				//剩下牌颜色不只一种,直接构成四条
 				else {
 					type = 3;
@@ -445,35 +426,9 @@ public class Type implements Comparable<Type>
 		}
 
 	}
-
-	/**
-	 * @function  通过卡牌值，找到对应卡牌优先级最高的花色
-	 * @param  integer  卡牌值
-	 * @return   花色
-	*/
-	private int getColor(Integer integer)
-	{
-		Collections.sort(hashMap.get(integer));
-		return 	hashMap.get(integer).get(0);
 	}
 
-	/**
-	 * @function    因为统计时将A的值看作1，但是在比较时应该看作比k还大的14
-	 * @param    a  卡牌对应数值
-	 * @return    卡牌转换后数值
-	*/
-	private int changeA(Integer a)
-	{
-		return (a==1)?14:a;
-	}
-
-	/**
-	 * @function  判断卡组是否构成顺子
-	 * @param    values  非鬼牌的值
-	 * @param    size  鬼牌的数量
-	 * @return    是否为顺子
-	*/
-	private boolean isConnected(ArrayList<Integer> values, int size)
+	private boolean isConnected(ArrayList<Integer> values, int size, int number)
 	{
 		// 非鬼卡牌与鬼牌数总和应该为5
 		if(values.size() + size != 5)
@@ -559,67 +514,19 @@ public class Type implements Comparable<Type>
 		}
 		return false;
 	}
-
-	/**
-	 * @function  便于直观的看到卡组的牌型
-	 * @return    表示牌型的字符串
-	*/
-	public String getType()
+	private int getColor(Integer integer)
 	{
-		return types[type];
-	}
-	/**
-	 * @function  重写toString
-	 * @param
-	 * @return    返回牌型的值
-	*/
-	@Override
-	public String toString()
-	{
-		return types[type];
+		Collections.sort(hashMap.get(integer));
+		return 	hashMap.get(integer).get(0);
 	}
 
 	/**
-	 * @function  简单的比较函数
-	 * @param    a,b
-	 * @return    返回三种关系对应的值，1表示a>b,-1表示a<b,0表示a=b
-	*/
-	private int compare(int a,int b)
+	 * @function    因为统计时将A的值看作1，但是在比较时应该看作比k还大的14
+	 * @param    a  卡牌对应数值
+	 * @return    卡牌转换后数值
+	 */
+	private int changeA(Integer a)
 	{
-		if(a>b)
-		{
-			return 1;
-		}
-		else if(a<b)
-		{
-			return -1;
-		}
-		return 0;
-	}
-
-	/**
-	 * @function  重写compareTo函数
-	 * @param    o  用于比较的Type对象
-	 * @return    当前对象与o的大小关系
-	*/
-	@Override
-	public int compareTo(Type o)
-	{
-		// 分别从四个维度取比较
-		if(compare(this.type,o.type)!=0){
-			return compare(o.type,this.type);
-		}
-		else if(compare(this.number,o.number)!=0){
-			return compare(this.number,o.number);
-		}
-		else if(compare(this.number2,o.number2)!=0){
-			return compare(this.number2,o.number2);
-		}
-		else if(compare(o.color,this.color)!=0){
-			return compare(o.color,this.color);
-		}
-		else {
-			return 0;
-		}
+		return (a==1)?14:a;
 	}
 }

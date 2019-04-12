@@ -15,6 +15,7 @@ package com.company;
 */
 public class Log
 {
+	//输出流程信息至标准输出
 	public static void write(String s){
 		System.out.println(s);
 	}

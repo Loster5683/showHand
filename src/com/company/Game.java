@@ -47,7 +47,7 @@ public class Game
 			// 玩家金币不足则结束游戏
 			if(GoldA < 10 || GoldB <= 10 ){
 				endGame = true;
-				Log.write("金币不足，无法开始游戏");
+				Log.write("玩家金币不足，无法开始游戏");
 				break;
 			}
 			// 每轮游戏开始
@@ -56,29 +56,34 @@ public class Game
 			ShuffleCard shuffleCard = new ShuffleCard();
 
 			{
+				// addTimes 变量用于记录当前操作的执行者是A还是B
 				int addTimes = (round+1)%2;
 				Log.write(Warn[addTimes%2]);
 				char tmp = scanner.next().charAt(0);
 				addTimes++;
 				// 每轮开始玩家直接结束游戏
-				if(tmp == 'Q'){
+				if(tmp == 'Q')
+				{
 					Log.write("Game Over");
 					break;
 				}
 				// 选择当轮弃牌，直接开始下一轮
-				if(tmp == 'N'){
+				if(tmp == 'N')
+				{
 					GoldA -= Gold;
 					GoldB += Gold;
 					continue;
 				}
 				//选择继续发牌，则转交选择权
-				else if(tmp == 'Y'){
+				else if(tmp == 'Y')
+				{
 					Log.write(Warn[addTimes%2]);
 					tmp = scanner.next().charAt(0);
 					addTimes++;
 				}
 				// 加注流程，循环判断
-				while(tmp == 'R'){
+				while(tmp == 'R')
+				{
 					Gold = Goldtmp;
 					Goldtmp = Gold + scanner.nextInt();
 					Log.write(Warn[addTimes%2]);
@@ -92,14 +97,18 @@ public class Game
 					ArrayList<Card> cardsB = shuffleCard.getCardsB();
 					Type typeA = new Type(cardsA);
 					Type typeB = new Type(cardsB);
-					Log.write("A的卡牌组:  " + cardsA +  "A的牌型:  " + typeA.getType());
-					Log.write("B的卡牌组:  " + cardsB +  "B的牌型:  " + typeB.getType());
+					Log.write("A的卡牌组:  " + cardsA +  "   A的牌型:  " + typeA.getType());
+					Log.write("B的卡牌组:  " + cardsB +  "   B的牌型:  " + typeB.getType());
 					Log.write("A与B牌组大小:  " + typeA.compareTo(typeB));
-					if(typeA.compareTo(typeB)==1){
+					// A的牌型大，A此轮胜利赢得Gold数量金币
+					if(typeA.compareTo(typeB)==1)
+					{
 						GoldA += Gold;
 						GoldB -= Gold;
 					}
-					else if(typeA.compareTo(typeB)==-1){
+					// B的牌型大，B此轮胜利赢得Gold数量金币
+					else if(typeA.compareTo(typeB)==-1)
+					{
 						GoldA -= Gold;
 						GoldB += Gold;
 					}
@@ -107,26 +116,34 @@ public class Game
 						continue;
 					}
 				}
-				// 某一方弃牌 通过变量addTimes判断当前选择的是A还是B
+				// 某一方弃牌 通过变量addTimes判断当前做出选择的是A还是B
 				else if(tmp == 'N'){
-					if(addTimes %2 == 1){
+					// A弃牌
+					if(addTimes %2 == 1)
+					{
 						GoldA -= Gold;
 						GoldB += Gold;
 						Log.write("A弃牌");
 					}
-					else {
+					//B弃牌
+					else
+					{
 						GoldA += Gold;
 						GoldB -= Gold;
 						Log.write("B弃牌");
 					}
 				}
-				else {
+				else
+				{
+					// 错误输入
 					Log.write("wrong input");
 				}
 			}
+			// 打印每轮游戏结束后玩家金币剩余
 			Log.write("playA 剩余金币 " + GoldA + "损益为" + (GoldA - 1000) );
 			Log.write("playB 剩余金币 " + GoldB + "损益为" + (GoldB - 1000) );
 		}
+		// 游戏结束关闭标准输入
 		scanner.close();
 	}
 }
