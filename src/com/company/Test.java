@@ -1,10 +1,28 @@
+/**
+ * 文件名：Test.java
+ * 描述：  测试类文件
+ * 创建人：yeqiang
+ * 创建时间：2019/4/11
+*/
+
 package com.company;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * @function  测试类
+ * @author    yeqiang
+ * @version    1.1
+ * @time      2019/4/11
+*/
 public class Test
 {
+	/**
+	 * @function  通过数组生成牌组
+	 * @param    a  数组形式牌组
+	 * @return    返回Arraylist形式牌组
+	*/
 	public ArrayList<Card> generateDesk(int[] a){
 		ArrayList<Card> cards = new ArrayList<Card>();
 		if(a.length!=10){
@@ -16,8 +34,10 @@ public class Test
 		return cards;
 	}
 	/**
-	 * 洗牌测试
-	 */
+	 * @function 洗牌算法测试
+	 * @param
+	 * @return   返回牌组
+	*/
 	public ShuffleCard testShuffleCard(){
 
 		ShuffleCard shuffleCard = new ShuffleCard();
@@ -25,10 +45,12 @@ public class Test
 		return shuffleCard;
 
 	}
+
 	/**
-	 *  发牌测试
-	 * @param  num  0选择A卡牌，1选择B卡牌
-	 */
+	 * @function  发牌功能测试
+	 * @param    num  num判断返回玩家A的卡组还是B的卡组
+	 * @return    ArrayList形式卡组
+	*/
 	public ArrayList<Card> testDelivery(int num){
 		ShuffleCard shuffleCard = new ShuffleCard();
 		ArrayList<Card> c3 = shuffleCard.getCardsA();
@@ -37,39 +59,62 @@ public class Test
 	}
 
 	/**
-	 *  类型判断
-	 * @param al 卡组
-	 */
+	 * @function  牌型判断测试
+	 * @param    al ArrayList形式牌组
+	 * @return    返回类型对象
+	*/
 	public Type testType (ArrayList<Card> al){
 		Type t = new Type(al);
 		System.out.println(t.getType());
 		return t;
 	}
+
 	/**
-	 * 类型比较
-	 * @param a1  卡组A
-	 * @param a2  卡组B
-	 */
+	 * @function  牌型大小比较测试
+	 * @param    a1  牌组a1
+ 	 * @param    a2  牌组a2
+	 * @return    返回a1相对a2的大小
+	*/
 	public void compare (ArrayList<Card> a1,ArrayList<Card> a2){
 		Type t1 = new Type(a1);
 		Type t2 = new Type(a2);
 		System.out.println(t1.compareTo(t2));
 	}
 
+	/**
+	 * @function    数组格式输入牌组牌型比较测试
+	 * @param   a  牌组a
+  	 * @param   b  牌组b
+	 * @return
+	*/
+	public void singeltest(int [] a,int [] b){
 
+		ArrayList<Card> a1 = generateDesk(a);
+		ArrayList<Card> a2 = generateDesk(b);
 
+		Type t1 = testType(a1);
+		Type t2 = testType(a2);
 
-	public void testDefined()
+		compare(a1,a2);
+	}
+	/**
+	 * @function  自定义数据集的不同牌型测试
+	 * @param
+	 * @return
+	*/
+	public void testDiffType()
 	{
 		/**
 		 * 		牌型测试用例
-
 		 */
 		int[][] a = {
 			//五鬼
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			//五条
-			{0, 0, 1, 0, 1, 1, 1, 2, 1, 3}, {0, 0, 0, 0, 2, 1, 2, 2, 2, 3}, {0, 0, 0, 0, 0, 0, 3, 0, 3, 1}, {0, 0, 0, 0, 0, 0, 0, 0, 4, 0},
+			{0, 0, 1, 0, 1, 1, 1, 2, 1, 3},
+			{0, 0, 0, 0, 2, 1, 2, 2, 2, 3},
+			{0, 0, 0, 0, 0, 0, 3, 0, 3, 1},
+			{0, 0, 0, 0, 0, 0, 0, 0, 4, 0},
 			//同花顺
 			{0, 0, 0, 0, 0, 0, 1, 0, 2, 0},
 			//四条
@@ -133,17 +178,95 @@ public class Test
 		System.out.println(types);
 		Collections.sort(types);
 		System.out.println(types);
-
+	}
+	/**
+	 * @function 同牌型大小比较测试用例
+	 * @param
+	 * @return
+	*/
+	public void testSameType(){
 		/**
 		 *	compare 功能测试，相同牌型进行大小比较
 		 */
 		int[][] cTestArray_A = {
 			//五条
-			{0, 0, 0, 0, 1, 0, 1, 1, 1, 2}
+			{0, 0, 0, 0, 1, 0, 1, 1, 1, 2},
+			{0, 0, 0, 0, 2, 0, 2, 1, 2, 2},
+			//同花顺
+			{1,0,2,0,3,0,4,0,5,0},
+			{9,0,10,0,11,0,12,0,13,0},
+			{1,1,2,1,3,1,4,1,5,1},
+			{2,3,3,3,4,3,5,3,6,3},
+
+			//四条
+			{1,0,1,1,1,2,1,3,2,0},
+			{1,0,2,0,2,1,2,2,2,3},
+			{1,0,1,3,0,0,0,0,2,0},
+
+			//葫芦
+			{0,0,1,0,1,1,2,0,2,1},
+			{1,0,1,1,0,0,2,0,2,1},
+			{1,0,1,1,0,0,2,0,2,1},
+
+			//同花
+			{2,1,3,1,4,1,5,1,10,1},
+			{2,1,3,1,4,1,5,1,7,1},
+			//顺子
+			{1,1,2,2,3,3,4,1,5,1},
+			{9,1,10,2,11,1,12,2,13,1},
+			{0,0,2,1,3,2,4,3,5,2},
+			//三条
+			{2,0,2,1,2,2,3,1,4,1},
+			{2,0,2,1,2,2,3,1,4,1},
+			//二对
+			{2,0,2,1,3,0,3,1,4,0},
+			{2,1,2,2,5,1,5,2,6,1},
+			{2,1,2,2,5,1,5,2,6,1},
+			//单对
+			{2,2,2,1,3,1,4,1,5,1},
+			{2,0,2,1,3,1,4,1,5,1},
+			//散牌
+			{1,2,2,3,5,1,6,2,7,2},
+			{1,2,2,3,5,1,6,2,7,2},
 		};
 
 		int[][] cTestArray_B = {
-			{0, 0, 0, 0, 2, 0, 2, 1, 2, 2}
+			//五条
+			{0, 0, 0, 0, 2, 0, 2, 1, 2, 2},
+			{0, 0, 0, 0, 3, 0, 3, 1, 3, 2},
+			//同花顺
+			{2,0,3,0,4,0,5,0,6,0},
+			{1,0,10,0,11,0,12,0,13,0},
+			{1,2,2,2,3,2,4,2,5,2},
+			{1,2,2,2,3,2,4,2,5,2},
+			//四条
+			{1,0,2,0,2,1,2,2,2,3},
+			{1,0,3,0,3,1,3,2,3,3},
+			{1,1,1,2,0,0,0,0,2,1},
+			//葫芦
+			{0,0,3,0,3,1,2,0,2,1},
+			{1,0,1,1,0,0,3,0,3,1},
+			{1,2,1,3,0,0,2,2,2,3},
+			// 同花
+			{2,1,3,1,4,1,5,1,7,1},
+			{2,2,3,2,4,2,5,2,7,2},
+			//顺子
+			{2,1,3,3,4,1,5,1,6,2},
+			{1,0,10,2,11,1,12,1,13,0},
+			{6,1,2,1,3,2,4,3,5,2},
+			//三条
+			{2,4,2,1,2,2,3,1,4,1},
+			{2,2,2,1,0,0,3,1,4,1},
+			//二对
+			{5,0,5,1,3,0,3,1,4,0},
+			{3,1,3,2,5,1,5,2,6,1},
+			{2,1,2,2,5,0,5,2,6,1},
+			//单对
+			{1,2,1,1,3,1,4,1,5,1},
+			{2,2,2,3,3,1,4,1,5,1},
+			//散牌
+			{8,2,2,3,5,1,6,2,7,2},
+			{1,0,2,3,5,1,6,2,7,2},
 		};
 		for (int ttt = 0; ttt < cTestArray_A.length; ttt++)
 		{
