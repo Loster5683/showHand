@@ -14,13 +14,27 @@ public class WuTiao extends CardType
 		type = 1;
 	}
 
-	@Override
+    @Override
+    public int getType() {
+        return type;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    @Override
 	public int compareTo(CardType o)
 	{
-		if(this.type != o.type)
+		if(this.type != o.getType())
 		{
-			return super.compareTo(o);
+			return super.compare(o.getType(),this.type);
 		}
-		return compare(this.number,((WuTiao)o).number);
+		return compare(this.number,((WuTiao)o).getNumber());
 	}
+
+    public String toString()
+    {
+        return types[type];
+    }
 }

@@ -16,10 +16,6 @@ public class SanTiao extends CardType
 		type = 7;
 	}
 
-	public int getType()
-	{
-		return type;
-	}
 
 	public int getColor()
 	{
@@ -32,19 +28,29 @@ public class SanTiao extends CardType
 		return number;
 	}
 
+    @Override
+    public int getType() {
+        return type;
+    }
+
 	@Override
 	public int compareTo(CardType o)
 	{
 		if(this.type != o.type)
 		{
-			return super.compareTo(o);
+			return super.compare(o.getType(),type);
 		}
 
-		if(this.number != ((SanTiao)o).number)
+		if(this.number != ((SanTiao)o).getNumber())
 		{
-			return this.compare(this.number,((SanTiao)o).number);
+			return this.compare(this.number,((SanTiao)o).getNumber());
 		}
 
-		return compare(((SanTiao)o).color,this.color);
+		return compare(((SanTiao)o).getColor(),this.color);
 	}
+
+    public String toString()
+    {
+        return types[type];
+    }
 }

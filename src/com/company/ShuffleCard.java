@@ -24,6 +24,7 @@ public class ShuffleCard
 	 */
 	private ArrayList<Card> initCards = new ArrayList<Card>();
 	private ArrayList<Card> cards = new ArrayList<Card>();
+	private static final int SIZE = 5;
 
 	/**
 	 * @function  洗牌算法
@@ -52,7 +53,8 @@ public class ShuffleCard
     */
 	public void init()
 	{
-		int i = 0,j = 0;
+		int i;
+		int j;
 		for ( i = 0; i <= 3; i++)
 		{
 			for(j = 1; j <= 13; j++)
@@ -60,7 +62,7 @@ public class ShuffleCard
 				initCards.add(new Card(false,i,j));
 			}
 		}
-		for( i = 0; i < 5; i++)
+		for( i = 0; i < SIZE; i++)
 		{
 			initCards.add(new Card(true));
 		}
@@ -73,7 +75,7 @@ public class ShuffleCard
 	*/
 	public void printQueue(){
 		for(Card card : cards){
-			System.out.print(card.toString()+'\n');
+			System.out.println(card.toString());
 		}
 	}
 
@@ -84,14 +86,14 @@ public class ShuffleCard
 	*/
 	public ArrayList<Card> getCardsA()
 	{
-		ArrayList<Card> cardhand = new ArrayList<Card>(5);
-		cardhand.add(cards.get(0));
-		cardhand.add(cards.get(1));
-		cardhand.add(cards.get(4));
-		cardhand.add(cards.get(6));
-		cardhand.add(cards.get(8));
-		System.out.println(cardhand);
-		return cardhand;
+		ArrayList<Card> cardHand = new ArrayList<Card>(5);
+		cardHand.add(cards.get(0));
+		cardHand.add(cards.get(1));
+		cardHand.add(cards.get(4));
+		cardHand.add(cards.get(6));
+		cardHand.add(cards.get(8));
+		System.out.println(cardHand);
+		return cardHand;
 	}
 	/**
 	 * @function  获取B的五张牌

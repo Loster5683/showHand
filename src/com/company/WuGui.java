@@ -13,9 +13,19 @@ public class WuGui extends CardType
 		type = 0;
 	}
 
+    @Override
+    public int getType() {
+        return type;
+    }
+
 	@Override
 	public int compareTo(CardType o)
 	{
-		return super.compareTo(o);
+	    return super.compareTo(o);
 	}
+
+    public String toString()
+    {
+        return types[type];
+    }
 }

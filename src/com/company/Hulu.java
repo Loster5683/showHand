@@ -18,11 +18,6 @@ public class Hulu extends CardType
 		type = 4;
 	}
 
-	public int getType()
-	{
-		return type;
-	}
-
 	public int getColor()
 	{
 		return color;
@@ -34,28 +29,38 @@ public class Hulu extends CardType
 		return number;
 	}
 
-	public int getNumber2(){
-		return number2;
-	}
+    @Override
+    public int getType() {
+        return type;
+    }
 
 	@Override
 	public int compareTo(CardType o)
 	{
 		if(this.type != o.type)
 		{
-			return super.compareTo(o);
+			return compare(o.getType(),type);
 		}
 
-		if(this.number != ((Hulu)o).number)
+		if(this.number != ((Hulu)o).getNumber())
 		{
-			return this.compare(this.number,((Hulu)o).number);
+			return this.compare(this.number,((Hulu)o).getNumber());
 		}
 
-		if(this.number2 != ((Hulu)o).number2)
+		if(this.number2 != ((Hulu)o).getNumber())
 		{
-			return this.compare(this.number2,((Hulu)o).number2);
+			return this.compare(this.number2,((Hulu)o).getNumber2());
 		}
 
-		return compare(((Hulu)o).color,this.color);
+		return compare(((Hulu)o).getColor(),this.color);
 	}
+
+    public int getNumber2() {
+	    return number2;
+    }
+
+    public String toString()
+    {
+        return types[type];
+    }
 }

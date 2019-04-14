@@ -16,10 +16,6 @@ public class TongHua extends CardType
 		type = 5;
 	}
 
-	public int getType()
-	{
-		return type;
-	}
 
 	public int getColor()
 	{
@@ -32,20 +28,31 @@ public class TongHua extends CardType
 		return number;
 	}
 
+
+    @Override
+    public int getType() {
+        return type;
+    }
+
 	@Override
 	public int compareTo(CardType o)
 	{
-		if(this.type != o.type)
+		if(this.type != o.getType())
 		{
-			return super.compareTo(o);
+			return super.compare(o.getType(),type);
 		}
 
-		if(this.number != ((TongHua)o).number)
+		if(this.number != ((TongHua)o).getNumber())
 		{
-			return this.compare(this.number,((TongHua)o).number);
+			return this.compare(this.number,((TongHua)o).getNumber());
 		}
 
-		return compare(((TongHua)o).color,this.color);
+		return compare(((TongHua)o).getColor(),this.color);
 	}
+
+    public String toString()
+    {
+        return types[type];
+    }
 
 }

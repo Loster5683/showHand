@@ -23,7 +23,7 @@ public class Test
 	 * @param    a  数组形式牌组
 	 * @return    返回Arraylist形式牌组
 	*/
-	public ArrayList<Card> generateDesk(int[] a){
+	public static ArrayList<Card> generateDesk(int[] a){
 		ArrayList<Card> cards = new ArrayList<Card>();
 		if(a.length!=10){
 			System.out.println("wrong length");
@@ -63,10 +63,10 @@ public class Test
 	 * @param    al ArrayList形式牌组
 	 * @return    返回类型对象
 	*/
-	public Type testType (ArrayList<Card> al){
-		Type t = new Type(al);
-		System.out.println(t.getType());
-		return t;
+	public CardType testType (ArrayList<Card> al){
+        CardType ct = ParseType.parseType(al);
+		System.out.println(ct.getType());
+		return ct;
 	}
 
 	/**
@@ -76,8 +76,8 @@ public class Test
 	 * @return    返回a1相对a2的大小
 	*/
 	public void compare (ArrayList<Card> a1,ArrayList<Card> a2){
-		Type t1 = new Type(a1);
-		Type t2 = new Type(a2);
+		CardType t1 = ParseType.parseType(a1);
+		CardType t2 = ParseType.parseType(a2);
 		System.out.println(t1.compareTo(t2));
 	}
 
@@ -92,8 +92,8 @@ public class Test
 		ArrayList<Card> a1 = generateDesk(a);
 		ArrayList<Card> a2 = generateDesk(b);
 
-		Type t1 = testType(a1);
-		Type t2 = testType(a2);
+		CardType t1 = ParseType.parseType(a1);
+		CardType t2 = ParseType.parseType(a2);
 
 		compare(a1,a2);
 	}
@@ -164,11 +164,11 @@ public class Test
 			//散牌
 			{1, 0, 2, 0, 3, 0, 4, 0, 6, 1},};
 
-		ArrayList<Type> types = new ArrayList<Type>();
+		ArrayList<CardType> types = new ArrayList<CardType>();
 		for (int[] b : a)
 		{
 			ArrayList<Card> c1 = generateDesk(b);
-			Type t1 = testType(c1);
+			CardType t1 = ParseType.parseType(Test.generateDesk(b));
 			types.add(t1);
 		}
 		/**
@@ -270,9 +270,9 @@ public class Test
 		{
 			ArrayList<Card> c1 = generateDesk(cTestArray_A[ttt]);
 			ArrayList<Card> c2 = generateDesk(cTestArray_B[ttt]);
-			Type t1 = testType(c1);
-			Type t2 = testType(c2);
-			compare(c1, c2);
+			CardType t1 = ParseType.parseType(c1);
+			CardType t2 = ParseType.parseType(c2);
+            System.out.println(t1.compareTo(t2));
 		}
 	}
 

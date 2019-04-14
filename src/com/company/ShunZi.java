@@ -16,10 +16,6 @@ public class ShunZi extends CardType
 		type = 6;
 	}
 
-	public int getType()
-	{
-		return type;
-	}
 
 	public int getColor()
 	{
@@ -32,20 +28,29 @@ public class ShunZi extends CardType
 		return number;
 	}
 
+    @Override
+    public int getType() {
+        return type;
+    }
+
 	@Override
 	public int compareTo(CardType o)
 	{
 		if(this.type != o.type)
 		{
-			return super.compareTo(o);
+			return super.compare(o.getType(),type);
 		}
 
-		if(this.number != ((ShunZi)o).number)
+		if(this.number != ((ShunZi)o).getNumber())
 		{
-			return this.compare(this.number,((ShunZi)o).number);
+			return this.compare(this.number,((ShunZi)o).getNumber());
 		}
 
-		return compare(((ShunZi)o).color,this.color);
+		return compare(((ShunZi)o).getColor(),this.color);
 	}
 
+    public String toString()
+    {
+        return types[type];
+    }
 }

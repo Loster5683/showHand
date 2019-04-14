@@ -95,8 +95,8 @@ public class Game
 					Gold = Goldtmp;
 					ArrayList<Card> cardsA = shuffleCard.getCardsA();
 					ArrayList<Card> cardsB = shuffleCard.getCardsB();
-					Type typeA = new Type(cardsA);
-					Type typeB = new Type(cardsB);
+					CardType typeA = ParseType.parseType(cardsA);
+					CardType typeB = ParseType.parseType(cardsB);
 					Log.write("A的卡牌组:  " + cardsA +  "   A的牌型:  " + typeA.getType());
 					Log.write("B的卡牌组:  " + cardsB +  "   B的牌型:  " + typeB.getType());
 					Log.write("A与B牌组大小:  " + typeA.compareTo(typeB));

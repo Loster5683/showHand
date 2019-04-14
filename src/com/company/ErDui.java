@@ -18,10 +18,6 @@ public class ErDui extends CardType
 		type = 8;
 	}
 
-	public int getType()
-	{
-		return type;
-	}
 
 	public int getColor()
 	{
@@ -34,6 +30,11 @@ public class ErDui extends CardType
 		return number;
 	}
 
+    @Override
+    public int getType() {
+        return type;
+    }
+
 	public int getNumber2(){
 		return number2;
 	}
@@ -43,19 +44,24 @@ public class ErDui extends CardType
 	{
 		if(this.type != o.type)
 		{
-			return super.compareTo(o);
+			return compare(o.getType(),type);
 		}
 
 		if(this.number != ((ErDui)o).number)
 		{
-			return this.compare(this.number,((ErDui)o).number);
+			return this.compare(this.number,((ErDui)o).getNumber());
 		}
 
 		if(this.number2 != ((ErDui)o).number2)
 		{
-			return this.compare(this.number2,((ErDui)o).number2);
+			return this.compare(this.number2,((ErDui)o).getNumber2());
 		}
 
-		return compare(((ErDui)o).color,this.color);
+		return compare(((ErDui)o).getColor(),this.color);
 	}
+
+    public String toString()
+    {
+        return types[type];
+    }
 }
