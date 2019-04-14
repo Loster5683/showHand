@@ -66,6 +66,7 @@ public class ParseCards {
             }
             return false;
         }
+
         // 两张鬼
         if(size == 2)
         {
