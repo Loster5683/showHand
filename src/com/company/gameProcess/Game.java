@@ -1,12 +1,15 @@
 /**
- * 文件名：Game.java
+ * 文件名：gameProcess.java
  * 描述：  游戏类文件
  * 创建人：yeqiang
  * 创建时间：2019/4/11
 */
 
-package com.company;
+package com.company.gameProcess;
 
+import com.company.cardTypes.Card;
+import com.company.parseTypes.ParseType;
+import com.company.cardTypes.CardType;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -64,7 +67,7 @@ public class Game
 				// 每轮开始玩家直接结束游戏
 				if(tmp == 'Q')
 				{
-					Log.write("Game Over");
+					Log.write("gameProcess Over");
 					break;
 				}
 				// 选择当轮弃牌，直接开始下一轮
@@ -72,6 +75,9 @@ public class Game
 				{
 					GoldA -= Gold;
 					GoldB += Gold;
+					// 打印每轮游戏结束后玩家金币剩余
+					Log.write("playA 剩余金币 " + GoldA + "损益为" + (GoldA - 1000) );
+					Log.write("playB 剩余金币 " + GoldB + "损益为" + (GoldB - 1000) );
 					continue;
 				}
 				//选择继续发牌，则转交选择权
@@ -97,8 +103,8 @@ public class Game
 					ArrayList<Card> cardsB = shuffleCard.getCardsB();
 					CardType typeA = ParseType.parseType(cardsA);
 					CardType typeB = ParseType.parseType(cardsB);
-					Log.write("A的卡牌组:  " + cardsA +  "   A的牌型:  " + typeA.getType());
-					Log.write("B的卡牌组:  " + cardsB +  "   B的牌型:  " + typeB.getType());
+					Log.write("A的卡牌组:  " + cardsA +  "   A的牌型:  " + typeA.toString());
+					Log.write("B的卡牌组:  " + cardsB +  "   B的牌型:  " + typeB.toString());
 					Log.write("A与B牌组大小:  " + typeA.compareTo(typeB));
 					// A的牌型大，A此轮胜利赢得Gold数量金币
 					if(typeA.compareTo(typeB)==1)

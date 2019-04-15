@@ -5,7 +5,7 @@
  * 创建时间：2019/4/11
 */
 
-package com.company;
+package com.company.gameProcess;
 
 /**
  * @function  打印游戏流程中的信息，可以实现不同的输出方式

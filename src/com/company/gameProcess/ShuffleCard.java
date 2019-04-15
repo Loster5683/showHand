@@ -3,19 +3,18 @@
  * 描述：  洗牌与发牌类
  * 创建人：yeqiang
  * 创建时间：2019/4/11
-*/
+ */
 
-package com.company;
+package com.company.gameProcess;
 
+import com.company.cardTypes.Card;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * @function  负责每轮游戏的洗牌与发牌过程
- * @author    yeqiang
- * @version   1.1
- * @time      2019/4/11
-*/
+ * @author yeqiang
+ * @version 1.1
+ */
 public class ShuffleCard
 {
 	/**
@@ -27,63 +26,68 @@ public class ShuffleCard
 	private static final int SIZE = 5;
 
 	/**
-	 * @function  洗牌算法
 	 * @param
+	 *
 	 * @return
-	*/
+	 */
 	public ShuffleCard()
 	{
 		init();
 		int size = initCards.size();
-		if(size <= 1){
+		if (size <= 1)
+		{
 			return;
 		}
 
-		while (initCards.size()>0){
+		while (initCards.size() > 0)
+		{
 			Random s = new Random();
 			int j = s.nextInt(initCards.size());
 			cards.add(initCards.get(j));
 			initCards.remove(j);
 		}
 	}
-    /**
-     * @function  初始化顺序生成一副
-     * @param
-     * @return
-    */
+
+	/**
+	 * @param
+	 *
+	 * @return
+	 */
 	public void init()
 	{
 		int i;
 		int j;
-		for ( i = 0; i <= 3; i++)
+		for (i = 0; i <= 3; i++)
 		{
-			for(j = 1; j <= 13; j++)
+			for (j = 1; j <= 13; j++)
 			{
-				initCards.add(new Card(false,i,j));
+				initCards.add(new Card(false, i, j));
 			}
 		}
-		for( i = 0; i < SIZE; i++)
+		for (i = 0; i < SIZE; i++)
 		{
-			initCards.add(new Card(true));
+			initCards.add(new Card(true, 0, 0));
 		}
 	}
 
 	/**
-	 * @function  牌组打印
 	 * @param
+	 *
 	 * @return
-	*/
-	public void printQueue(){
-		for(Card card : cards){
-			System.out.println(card.toString());
+	 */
+	public void printQueue()
+	{
+		for (int i = 0; i < cards.size(); i++)
+		{
+			System.out.println(cards.get(i).toString());
 		}
 	}
 
 	/**
-	 * @function  获取A的五张牌
 	 * @param
-	 * @return    A玩家每轮获取的五张牌
-	*/
+	 *
+	 * @return A玩家每轮获取的五张牌
+	 */
 	public ArrayList<Card> getCardsA()
 	{
 		ArrayList<Card> cardHand = new ArrayList<Card>(5);
@@ -95,10 +99,11 @@ public class ShuffleCard
 		System.out.println(cardHand);
 		return cardHand;
 	}
+
 	/**
-	 * @function  获取B的五张牌
 	 * @param
-	 * @return    B玩家每轮获取的五张牌
+	 *
+	 * @return B玩家每轮获取的五张牌
 	 */
 	public ArrayList<Card> getCardsB()
 	{
