@@ -7,35 +7,32 @@
 
 package com.company.cardTypes;
 
+import com.company.parseTypes.ParamCount;
 import java.util.ArrayList;
 
 public class TongHuaShun implements CardType
 {
-	//类型
+	// 关键卡牌集合，用于对同类型的牌组进行比较
+	private ArrayList<Card> keyCards;
+	// 牌组统计信息
+	private ParamCount paramCount;
+	// 类型
 	private int type;
-	//大小
-	private int number;
-	//花色
-	private int color;
-	//卡组
-	private ArrayList<Card> cards;
 
-	public TongHuaShun(ArrayList<Card> cards, int number, int color)
+	public TongHuaShun(ParamCount paramCount)
 	{
-		this.number = number;
-		this.color = color;
-		type = 2;
+		this.type = 2;
+		this.paramCount = paramCount;
+		this.keyCards = this.getKeyCards();
 	}
 
-	public int getColor()
+	public static boolean isTongHuaShun(int colors, int ghostCount, ArrayList<Integer> values)
 	{
-		return color;
-	}
-
-	public int getNumber()
-	{
-
-		return number;
+		if (colors != 1)
+		{
+			return false;
+		}
+		return (ShunZi.isShunZi(values, ghostCount) != 0);
 	}
 
 	@Override
@@ -47,21 +44,34 @@ public class TongHuaShun implements CardType
 	@Override
 	public int compareTo(CardType o)
 	{
+		int result;
+
 		if (this.type != o.getType())
 		{
-			return Integer.compare(o.getType(), type);
+			result = Integer.compare(o.getType(), type);
 		}
-
-		if (this.number != ((TongHuaShun)o).getNumber())
+		else
 		{
-			return Integer.compare(this.number, ((TongHuaShun)o).getNumber());
+			result = this.keyCards.get(0).compareTo(o.getKeyCards().get(0));
 		}
 
-		return Integer.compare(((TongHuaShun)o).getColor(), this.color);
+		return result;
+	}
+
+	@Override
+	public ArrayList<Card> getKeyCards()
+	{
+		ArrayList<Card> keyCards = new ArrayList<Card>();
+		int color = this.paramCount.getColors().get(0);
+		int value = ShunZi.isShunZi(paramCount.getValues(), paramCount.getGhostCount());
+		keyCards.add(new Card(value, color));
+
+		return keyCards;
 	}
 
 	public String toString()
 	{
 		return types[type];
 	}
+
 }

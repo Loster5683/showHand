@@ -17,19 +17,13 @@ import java.util.Random;
  */
 public class ShuffleCard
 {
-	/**
-	 * initCard  按序自动生成的一副牌
-	 * cards     洗牌算法对initCard进行洗牌后的一副牌
-	 */
-	private ArrayList<Card> initCards = new ArrayList<Card>();
-	private ArrayList<Card> cards = new ArrayList<Card>();
+	//牌组大小
 	private static final int SIZE = 5;
+	//initCard  按序自动生成的一副牌
+	private ArrayList<Card> initCards = new ArrayList<Card>();
+	//cards     洗牌算法对initCard进行洗牌后的一副牌
+	private ArrayList<Card> cards = new ArrayList<Card>();
 
-	/**
-	 * @param
-	 *
-	 * @return
-	 */
 	public ShuffleCard()
 	{
 		init();
@@ -38,7 +32,6 @@ public class ShuffleCard
 		{
 			return;
 		}
-
 		while (initCards.size() > 0)
 		{
 			Random s = new Random();

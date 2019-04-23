@@ -20,4 +20,10 @@ public class WrongType implements CardType
 	{
 		return -1;
 	}
+
+	@Override
+	public ArrayList<Card> getKeyCards()
+	{
+		return null;
+	}
 }

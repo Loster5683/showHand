@@ -6,6 +6,7 @@
  */
 package com.company.cardTypes;
 
+import java.util.ArrayList;
 
 /**
  * @author 作者  yeqiang
@@ -14,15 +15,12 @@ package com.company.cardTypes;
 public interface CardType extends Comparable<CardType>
 {
 	// toString使用String数组
+
 	String[] types = {"五鬼", "五条", "同花顺", "四条", "葫芦", "同花", "顺子", "三条", "二对", "单对", "散牌"};
 
-	/**
-	 * 功能：  返回类型
-	 *
-	 * @return 类型代号
-	 */
 	int getType();
 
-	@Override
 	int compareTo(CardType o);
+
+	ArrayList<Card> getKeyCards();
 }
